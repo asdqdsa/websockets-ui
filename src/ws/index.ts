@@ -1,39 +1,16 @@
 import { WebSocketServer } from "ws";
-import { httpServer } from "../http_server";
 import type { Server } from "http";
-
-// export function handleConnection({ wss, socket }) {
-//   wss.on("connection", (ws) => {
-//     console.log("Client connected");
-
-//     ws.on("message", (message) => {
-//       console.log(`Received message: ${message}`);
-//     });
-
-//     ws.on("close", () => {
-//       console.log("Client disconnected");
-//     });
-//   });
-// }
+import type { WebSocketWithId } from "./type";
+import { handleConnection } from "./connection";
 
 export function createWsServer({ server }: { server: Server }) {
   const wss = new WebSocketServer({ server });
-  // const wss = new WebSocketServer({ port });
 
-  console.log("WebSocket server started");
-  wss.on("connection", (ws) => {
-    console.log("Client connected");
+  console.log("WebSocket server is running");
 
-    ws.on("message", (message) => {
-      console.log(`Received message: ${message}`);
-    });
-
-    ws.on("close", () => {
-      console.log("Client disconnected");
-    });
-
-    ws.send("Hello from WebSocket server!");
-  });
+  wss.on("connection", (ws) =>
+    handleConnection(ws as unknown as WebSocketWithId),
+  );
 
   return wss;
 }
