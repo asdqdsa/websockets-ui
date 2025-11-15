@@ -14,3 +14,20 @@ Thumbs.db
 
 # Logs
 npm-debug.log
+
+# Spec
+*spec.*
+
+# Env
+.env
+.env.local
+.env.development
+.env.production
+
+!.evn.example
+!.evn.*.example
+
+# Lock files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
